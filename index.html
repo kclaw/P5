@@ -1,0 +1,84 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Neighbourhood</title>
+    <style>
+      body {
+        position : relative;
+      }
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+      #searchbar{
+        position:absolute;
+        top: 10%;
+        left: 80%;
+        z-index: 99;
+      }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="searchbar">
+        <input type="search" data-bind="value:query,valueUpdate:'keyup'" autocomplete="off"/>
+        <div id="listview">
+            <ul data-bind="template: {name:'marker-list',foreach:viewmodel.markers}"></ul>
+        </div>
+    </div>
+     <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkGtCBYlY5jVJgSLybrruTvGZs5lejQA0">
+    </script>
+    <script>
+        google.maps.event.addDomListener(window, 'load', initMap);
+        function initMap() {
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 22.451754, lng: 114.164387},
+            zoom: 12
+          });
+            window.map = map;
+
+        model.markers.forEach(function(marker){
+            new google.maps.Marker({
+                position : {lat:marker.latitude,lng:marker.longitude},
+                map:map,
+                title:marker.name
+            });
+
+        });
+        }
+
+    </script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js'>
+    </script>
+    <script>
+        var model = {
+            markers : [
+                {
+                 'name':'home',
+                 'latitude': 22.451754,
+                 'longitude': 114.164387
+                },{
+                  'name':'school',
+                'latitude': 22.4518,
+                    'longitude': 114.13
+                }
+            ]
+        };
+        var viewmodel = {
+            query: ko.observable('')
+        };
+        viewmodel.markers = ko.dependentObservable(function(){
+            var search = this.query().toLowerCase();
+            console.log('search'+search);
+            return ko.utils.arrayFilter(model.markers,function(marker){
+                console.log(marker.name);
+                console.log(marker.name.toLowerCase().indexOf(search) >= 0);
+                return marker.name.toLowerCase().indexOf(search) >= 0;
+            });
+        },viewmodel);
+        ko.applyBindings(viewmodel);
+    </script>
+
+</body>
+</html>
