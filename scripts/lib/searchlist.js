@@ -11,14 +11,15 @@ define("searchlist",['knockout','model','map'],function(ko,model,map){
                     return marker.name.toLowerCase().indexOf(search) >= 0;
                 });
         });
-        self.viewModel.selectedItem = ko.observable('');
-        self.viewModel.selectItem = function(){
+        self.viewModel.selectedItem = ko.observable([model.markers[0]]);
+        self.viewModel.selectItem = ko.computed(function(){
             console.log(self.viewModel.selectedItem());
             map.zoomToMarker(self.viewModel.selectedItem()[0]);
-        };
-        self.template1 = '<ul data-bind="foreach:searchlist.viewModel.markers"><li><strong data-bind="text: name"></strong></li></ul>';
-        self.template = '<select data-bind="click:function(){searchlist.viewModel.selectItem($data);},options:searchlist.viewModel.markers,optionsText: function(item){return item.name;},selectedOptions:searchlist.viewModel.selectedItem"></select>';
+        });
+        /*self.template1 = '<ul data-bind="foreach:searchlist.viewModel.markers"><li><strong data-bind="text: name"></strong></li></ul>';*/
+        self.template = '<select data-bind="options:searchlist.viewModel.markers,optionsText: function(item){return item.name;},selectedOptions:searchlist.viewModel.selectedItem"></select>';
  };
+
     window.searchlist = new Component();
     ko.components.register('searchlist',window.searchlist);
     ko.applyBindings();

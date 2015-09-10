@@ -63,7 +63,7 @@
     <body>
         <div id="map"></div>
         <div id="searchbar">
-            <input type="search" data-bind="value:searchlist.viewModel.query,valueUpdate:'keyup'" autocomplete="off"/>
+            <input type="search" data-bind="value:searchlist.viewModel.query,map.viewModel.query,valueUpdate:'keyup'" autocomplete="off"/>
             <div class="searchlist" data-bind="component: 'searchlist'">
             </div>
         </div>

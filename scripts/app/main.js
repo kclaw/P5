@@ -15,8 +15,8 @@ requirejs.config({
     },
     "shim": {
         "jquery.appender": ["jquery"],
-        "jquery.textReplacer": ["jquery"],
+        "jquery.textReplacer": ["jquery"]
     }
 });
 
-requirejs(['searchlist','map']);
+requirejs(['searchlist']);
