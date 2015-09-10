@@ -19,9 +19,32 @@
         left: 80%;
         z-index: 99;
       }
+     #searchbar input {
+            width: 240px;
+            height: 34px;
+      }
      #listview > select{
         width: 173px;
      }
+    .searchlist select{
+       background: transparent;
+       width: 240px;
+       padding: 5px;
+       font-size: 16px;
+       line-height: 1;
+       border: 0;
+       border-radius: 0;
+       height: 34px;
+       -webkit-appearance: none;
+    }
+
+    .searchlist {
+       width: 240px;
+       height:34px;
+       overflow: hidden;
+       background: url(down_arrow_select.jpg) no-repeat right #ddd;
+       border: 1px solid #ccc;
+   }
     </style>
 </head>
     <body>
@@ -29,7 +52,7 @@
         <div id="map"></div>
         <div id="searchbar">
             <input type="search" data-bind="value:searchlist.viewModel.query,valueUpdate:'keyup'" autocomplete="off"/>
-            <div id="listview" data-bind="component: 'searchlist'">
+            <div class="searchlist" data-bind="component: 'searchlist'">
             </div>
         </div>
     </body>

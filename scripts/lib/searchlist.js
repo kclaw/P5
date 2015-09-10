@@ -17,7 +17,7 @@ define("searchlist",['knockout','model','map'],function(ko,model,map){
             map.zoomToMarker(self.viewModel.selectedItem()[0]);
         };
         self.template1 = '<ul data-bind="foreach:searchlist.viewModel.markers"><li><strong data-bind="text: name"></strong></li></ul>';
-        self.template = '<select multiple="multiple" height="5" data-bind="click:function(){searchlist.viewModel.selectItem($data);},options:searchlist.viewModel.markers,optionsText: function(item){return item.name;},selectedOptions:searchlist.viewModel.selectedItem"></select>';
+        self.template = '<select data-bind="click:function(){searchlist.viewModel.selectItem($data);},options:searchlist.viewModel.markers,optionsText: function(item){return item.name;},selectedOptions:searchlist.viewModel.selectedItem"></select>';
  };
     window.searchlist = new Component();
     ko.components.register('searchlist',window.searchlist);
