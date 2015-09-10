@@ -19,4 +19,4 @@ requirejs.config({
     }
 });
 
-requirejs(['searchlist','map','header']);
+requirejs(['searchlist','map']);

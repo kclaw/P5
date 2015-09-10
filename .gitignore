@@ -4,3 +4,6 @@
 /bower_components/
 /node_modules/
 /scripts/lib/stringTemplateEngine.js
+/scripts/lib/header.js
+/scripts/nls/
+/scripts/template/
