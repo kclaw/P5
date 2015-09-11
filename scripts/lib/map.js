@@ -2,7 +2,6 @@ define('map',['gmap','model','knockout'],function(gmap,model,ko){
     var map;
     var gmarkers = [];
     var defaultZoomLevel = 12;
-    var viewModel = {query : ko.observable('')};
 
     function initMap() {
           map = new gmap.Map(document.getElementById('map'), {
@@ -18,14 +17,18 @@ define('map',['gmap','model','knockout'],function(gmap,model,ko){
 
     initMap();
 
-    filterMarkers = ko.computed(function(){
-         var search = viewModel.query();
-                return ko.utils.arrayFilter(model.markers,function(marker){
-                    console.log(marker.name);
-                    console.log(marker.name.toLowerCase().indexOf(search) >= 0);
-                    return marker.name.toLowerCase().indexOf(search) >= 0;
-                });
-    });
+    function filterMarkers(search){
+           console.log('filterMarkers is called ');
+           ko.utils.arrayFilter(gmarkers,function(gmarker){
+                console.log(gmarker.title);
+                console.log(gmarker.title.toLowerCase().indexOf(search) >= 0);
+                if(gmarker.title.toLowerCase().indexOf(search) >= 0)
+                    putMarkerOnMap(gmarker,map);
+                else
+                    putMarkerOnMap(gmarker,null);
+            });
+    };
+
 
     function createMarker(marker){
         var gmarker = new gmap.Marker({
@@ -34,6 +37,10 @@ define('map',['gmap','model','knockout'],function(gmap,model,ko){
                 title:marker.name
             });
         gmarkers.push(gmarker);
+    };
+
+    function putMarkerOnMap(gmarker,map){
+        gmarker.setMap(map);
     };
 
     function zoomToMarker(marker){
@@ -49,9 +56,10 @@ define('map',['gmap','model','knockout'],function(gmap,model,ko){
         }
     };
 
-    this.map.viewModel = viewModel;
-
+    //this.map.viewModel = viewModel;
+    //ko.applyBindings(this.map.viewModel);
     return {
-        zoomToMarker : zoomToMarker
+        zoomToMarker : zoomToMarker,
+        filterMarkers : filterMarkers
     };
 });
