@@ -1,18 +1,19 @@
-define('wiki',['jquery'],function($){
+define('wiki', ['jquery'], function($) {
     var wikistart = '<ul id=\'wikiresult\'></ul>';
-    function searchWiki(para){
+
+    function searchWiki(para) {
         clearDisplay();
         var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + para + '&format=json&list=geosearch&callback=wikiCallback';
-        var wikiRequestTimeout = setTimeout(function(){
+        var wikiRequestTimeout = setTimeout(function() {
             alert('wiki not found');
-        },8000);
+        }, 8000);
         $.ajax({
-            url : wikiUrl,
+            url: wikiUrl,
             dataType: "jsonp",
-            success: function(response){
+            success: function(response) {
                 var articleList = response[1];
 
-                if(articleList.length>0){
+                if (articleList.length > 0) {
                     display(articleList);
                 }
                 clearTimeout(wikiRequestTimeout);
@@ -20,18 +21,19 @@ define('wiki',['jquery'],function($){
         });
     };
 
-    function display(articleList){
+    function display(articleList) {
         $('.wikirelevant').append(wikistart);
-        for(var i=0;i<articleList.length;i++){
+        for (var i = 0; i < articleList.length; i++) {
             articleStr = articleList[i];
-            var url = "http://en.wikipedia.org/wiki/"+articleStr;
-            $('#wikiresult').append('<li><a href="'+url+'">'+articleStr+'</a></li>');
+            var url = "http://en.wikipedia.org/wiki/" + articleStr;
+            $('#wikiresult').append('<li><a href="' + url + '">' + articleStr + '</a></li>');
         }
     };
-    function clearDisplay(){
+
+    function clearDisplay() {
         $('.wikirelevant').html('');
     };
     return {
-        searchWiki : searchWiki
+        searchWiki: searchWiki
     }
 });

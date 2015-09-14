@@ -1,31 +1,31 @@
-define("searchlist",['knockout','model','map','wiki'],function(ko,model,map,wiki){
-    var Component = function(map){
+define("searchlist", ['knockout', 'model', 'map', 'wiki'], function(ko, model, map, wiki) {
+    var Component = function(map) {
         var self = this;
-        self.viewModel = function(params){};
+        self.viewModel = function(params) {};
         self.viewModel.query = ko.observable('');
-        self.viewModel.query.subscribe(function(newValue){
+        self.viewModel.query.subscribe(function(newValue) {
             map.filterMarkers(newValue);
             wiki.searchWiki(newValue);
         });
-        self.viewModel.markers = ko.computed(function(){
-               var search = self.viewModel.query();
-                return ko.utils.arrayFilter(model.markers,function(marker){
-                    console.log(marker.name);
-                    console.log(marker.name.toLowerCase().indexOf(search) >= 0);
-                    return marker.name.toLowerCase().indexOf(search) >= 0;
-                });
+        self.viewModel.markers = ko.computed(function() {
+            var search = self.viewModel.query();
+            return ko.utils.arrayFilter(model.markers, function(marker) {
+                console.log(marker.name);
+                console.log(marker.name.toLowerCase().indexOf(search) >= 0);
+                return marker.name.toLowerCase().indexOf(search) >= 0;
+            });
         });
         self.viewModel.selectedItem = ko.observable([model.markers[0]]);
-        self.viewModel.selectItem = ko.computed(function(){
+        self.viewModel.selectItem = ko.computed(function() {
             console.log(self.viewModel.selectedItem());
             console.log(self.map);
             map.zoomToMarker(self.viewModel.selectedItem()[0]);
         });
         /*self.template1 = '<ul data-bind="foreach:searchlist.viewModel.markers"><li><strong data-bind="text: name"></strong></li></ul>';*/
         self.template = '<select multiple="true" data-bind="options:searchlist.viewModel.markers,optionsText: function(item){return item.name;},selectedOptions:searchlist.viewModel.selectedItem"></select>';
- };
+    };
 
     window.searchlist = new Component(map);
-    ko.components.register('searchlist',window.searchlist);
+    ko.components.register('searchlist', window.searchlist);
     ko.applyBindings();
 });
