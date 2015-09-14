@@ -11,7 +11,7 @@ requirejs.config({
       "stringTemplateEngine" : "stringTemplateEngine",
       "knockout" : "https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min",
       "googlemap":
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyAkGtCBYlY5jVJgSLybrruTvGZs5lejQA0&sensor=true!callback"
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyAkGtCBYlY5jVJgSLybrruTvGZs5lejQA0&sensor=true!callback",
     },
     "shim": {
         "jquery.appender": ["jquery"],

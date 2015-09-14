@@ -1,10 +1,11 @@
-define("searchlist",['knockout','model','map'],function(ko,model,map){
+define("searchlist",['knockout','model','map','wiki'],function(ko,model,map,wiki){
     var Component = function(map){
         var self = this;
         self.viewModel = function(params){};
         self.viewModel.query = ko.observable('');
         self.viewModel.query.subscribe(function(newValue){
             map.filterMarkers(newValue);
+            wiki.searchWiki(newValue);
         });
         self.viewModel.markers = ko.computed(function(){
                var search = self.viewModel.query();

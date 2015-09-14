@@ -46,15 +46,16 @@
        font-size: 16px;
        display: inline-block;
        overflow: hidden;
+       border-bottom-left-radius: 10px;
+       border-bottom-right-radius : 10px;
     }
 
 
-    .searchlist {
-       width: 240px;
-       height:120px;
-       border: 1px solid #ccc;
-       border-bottom-left-radius: 10px;
-   }
+    .wikirelevant ul{
+        margin: 20 20 20 20;
+        background: yellow;
+        list-style-type : none;
+    }
     </style>
 </head>
     <body>
@@ -63,6 +64,7 @@
             <input type="search" data-bind="value:searchlist.viewModel.query,valueUpdate:'keyup'" autocomplete="off"/>
             <div class="searchlist" data-bind="component: 'searchlist'">
             </div>
+            <div class="wikirelevant"></div>
         </div>
     </body>
 </html>
