@@ -3,6 +3,9 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
     var gmarkers = [];
     var defaultZoomLevel = 12;
 
+    /**
+     * This function is called when map is going to use.
+     */
     function initMap() {
         map = new gmap.Map(document.getElementById('map'), {
             center: {
@@ -20,6 +23,10 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
 
     initMap();
 
+    /**
+     * This function filter markers shown on map
+     * @param {String} search search data
+     */
     function filterMarkers(search) {
         console.log('filterMarkers is called ');
         ko.utils.arrayFilter(gmarkers, function (gmarker) {
@@ -32,7 +39,10 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
         });
     };
 
-
+    /**
+     * This function create marker on map
+     * @param {Object} marker from model
+     */
     function createMarker(marker) {
         var gmarker = new gmap.Marker({
             position: {
@@ -46,6 +56,11 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
         gmarkers.push(gmarker);
     }
 
+    /**
+     * This function put marker on map
+     * @param {Object} gmarker google.maps.Marker
+     * @param {Object} map     google.maps.Map
+     */
     function putMarkerOnMap(gmarker, map) {
         gmarker.setMap(map);
     }
@@ -63,6 +78,10 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
         }
     }
 
+    /**
+     * This function add Listener to marker
+     * @param {Object} marker google.maps.Marker
+     */
     function addListenerToMarker(marker) {
         marker.addListener('click', function () {
             if (marker.getAnimation() !== null) {

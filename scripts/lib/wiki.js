@@ -1,6 +1,10 @@
 define('wiki', ['jquery'], function ($) {
     var wikistart = '<ul id=\'wikiresult\'></ul>';
 
+    /**
+     * this function will send a searcch request to wikipedia
+     * @param {String} para data need search
+     */
     function searchWiki(para) {
         clearDisplay();
         var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + para + '&format=json&list=geosearch&callback=wikiCallback';
@@ -18,8 +22,12 @@ define('wiki', ['jquery'], function ($) {
                 clearTimeout(wikiRequestTimeout);
             }
         });
-    };
+    }
 
+    /**
+     * This function display wikipedia search result
+     * @param {Array} articleList searched result
+     */
     function display(articleList) {
         $('.wikirelevant').append(wikistart);
         for (var i = 0; i < articleList.length; i++) {
@@ -29,6 +37,9 @@ define('wiki', ['jquery'], function ($) {
         }
     }
 
+    /**
+     * [[Description]]
+     */
     function clearDisplay() {
         $('.wikirelevant').html('');
     }
