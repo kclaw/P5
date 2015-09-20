@@ -1,70 +1,59 @@
 <html>
+
 <head>
     <script data-main="scripts/app/main.js" src="scripts/lib/require.js"></script>
     <style>
-      * {
-         margin:0px;
-         padding:0px;
-      }
-
-
-      body {
-        position : relative;
-      }
-
-
-      #map {
-        width: 100%;
-        height: 100%;
-      }
-
-
-      #searchbar{
-        position: absolute;
-        top: 10%;
-        left: 80%;
-        z-index: 99;
-      }
-
-
-     #searchbar input {
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            position: relative;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        #searchbar {
+            position: absolute;
+            top: 10%;
+            left: 80%;
+            z-index: 99;
+        }
+        #searchbar input {
             width: 240px;
             height: 34px;
-      }
-
-
-     #listview > select{
-        width: 173px;
-     }
-
-
-    .searchlist select{
-       background: grey;
-       width: 240px;
-       height: 120px;
-       padding: 5px;
-       font-size: 16px;
-       display: inline-block;
-       overflow: hidden;
-       border-bottom-left-radius: 10px;
-       border-bottom-right-radius : 10px;
-    }
-
-
-    .wikirelevant ul{
-        margin: 20 20 20 20;
-        background: yellow;
-        list-style-type : none;
-    }
+        }
+        #listview > select {
+            width: 173px;
+        }
+        .searchlist select {
+            background: grey;
+            width: 240px;
+            height: 120px;
+            padding: 5px;
+            font-size: 16px;
+            display: inline-block;
+            overflow: hidden;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .wikirelevant ul {
+            margin: 20 20 20 20;
+            background: yellow;
+            list-style-type: none;
+        }
     </style>
 </head>
-    <body>
-        <div id="map"></div>
-        <div id="searchbar">
-            <input type="search" data-bind="value:searchlist.viewModel.query,valueUpdate:'keyup'" autocomplete="off"/>
-            <div class="searchlist" data-bind="component: 'searchlist'">
-            </div>
-            <div class="wikirelevant"></div>
+
+<body>
+    <div id="map"></div>
+    <div id="searchbar">
+        <input type="search" data-bind="value:searchlist.viewModel.query,valueUpdate:'keyup'" autocomplete="off" />
+        <div class="searchlist" data-bind="component: 'searchlist'">
         </div>
-    </body>
+        <div class="wikirelevant"></div>
+    </div>
+</body>
+
 </html>

@@ -1,16 +1,16 @@
-define('wiki', ['jquery'], function($) {
+define('wiki', ['jquery'], function ($) {
     var wikistart = '<ul id=\'wikiresult\'></ul>';
 
     function searchWiki(para) {
         clearDisplay();
         var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + para + '&format=json&list=geosearch&callback=wikiCallback';
-        var wikiRequestTimeout = setTimeout(function() {
+        var wikiRequestTimeout = setTimeout(function () {
             alert('wiki not found');
         }, 8000);
         $.ajax({
             url: wikiUrl,
             dataType: "jsonp",
-            success: function(response) {
+            success: function (response) {
                 var articleList = response[1];
                 if (articleList.length > 0) {
                     display(articleList);
