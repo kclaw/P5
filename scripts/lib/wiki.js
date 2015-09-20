@@ -12,7 +12,6 @@ define('wiki', ['jquery'], function($) {
             dataType: "jsonp",
             success: function(response) {
                 var articleList = response[1];
-
                 if (articleList.length > 0) {
                     display(articleList);
                 }
@@ -28,12 +27,13 @@ define('wiki', ['jquery'], function($) {
             var url = "http://en.wikipedia.org/wiki/" + articleStr;
             $('#wikiresult').append('<li><a href="' + url + '">' + articleStr + '</a></li>');
         }
-    };
+    }
 
     function clearDisplay() {
         $('.wikirelevant').html('');
-    };
+    }
+
     return {
         searchWiki: searchWiki
-    }
+    };
 });

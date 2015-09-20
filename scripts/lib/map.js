@@ -42,12 +42,13 @@ define('map', ['gmap', 'model', 'knockout'], function(gmap, model, ko) {
             map: map,
             title: marker.name
         });
+        addListenerToMarker(gmarker);
         gmarkers.push(gmarker);
-    };
+    }
 
     function putMarkerOnMap(gmarker, map) {
         gmarker.setMap(map);
-    };
+    }
 
     function zoomToMarker(marker) {
         console.log('Zoom to marker');
@@ -60,10 +61,18 @@ define('map', ['gmap', 'model', 'knockout'], function(gmap, model, ko) {
             map.setZoom(15);
             map.panTo(filtered[0].position);
         }
-    };
+    }
 
-    //this.map.viewModel = viewModel;
-    //ko.applyBindings(this.map.viewModel);
+    function addListenerToMarker(marker){
+        marker.addListener('click', function(){
+                if (marker.getAnimation() !== null) {
+        marker.setAnimation(null);
+      } else {
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+      }
+        });
+    }
+
     return {
         zoomToMarker: zoomToMarker,
         filterMarkers: filterMarkers
