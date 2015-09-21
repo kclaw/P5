@@ -1,9 +1,8 @@
 Neighbourhood Map
 =========================================
-This program manipulate google map,wikipedia,knockout,require framework/library.
-The aim of program is to show places on map with search ability on given data.
-places are pinned by markers and can be filtered by right handside searchlist.
-searchlist conpile a textbox and select element. with inputting of data into textbox,places are filtered on select element and also wikipedia search result is displayed.
+    This program manipulates google map,wikipedia,knockout,require framework/library.
+
+    The aim of program is to show places on map with search ability on given data.places are pinned by markers and can be filtered by right handside searchlist.searchlist conpile a textbox and select element. with inputting of data into textbox,places are filtered on select element and also wikipedia search result is displayed.
 
 
 Display Market
