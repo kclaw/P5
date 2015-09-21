@@ -1,4 +1,9 @@
 define("searchlist", ['knockout', 'model', 'map', 'wiki'], function (ko, model, map, wiki) {
+    /**
+     * This component provides functions of getting matched markets and action to selected place name.
+     * @param   {Object} map google.map.Map
+     * @returns {Object} searchlist web component
+     */
     var Component = function (map) {
         var self = this;
         self.viewModel = function (params) {};
