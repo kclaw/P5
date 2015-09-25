@@ -19,7 +19,7 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
             createMarker(marker);
 
         });
-    };
+    }
 
     initMap();
 
@@ -37,7 +37,7 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
             else
                 putMarkerOnMap(gmarker, null);
         });
-    };
+    }
 
     /**
      * This function create marker on map
