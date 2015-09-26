@@ -30,7 +30,7 @@ define('wiki', ['jquery'], function ($) {
     This function would send search request to wikipedia and get back brief content
      * @param {String} para data need to search
      */
-    function searchWikiExtract(para,handler){
+    function searchWikiExtract(para, handler){
         var wikiUrl = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles="+para;
         var wikiRequestTimeout = setTimeout(function () {
             alert('wiki not found');
