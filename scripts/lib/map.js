@@ -1,4 +1,4 @@
-define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
+define('map', ['gmap', 'model', 'knockout', 'wiki'], function (gmap, model, ko, wiki) {
     var map;
     var gmarkers = [];
     var defaultZoomLevel = 12;
@@ -83,14 +83,29 @@ define('map', ['gmap', 'model', 'knockout'], function (gmap, model, ko) {
      * @param {Object} marker google.maps.Marker
      */
     function addListenerToMarker(marker) {
-        marker.addListener('click', function () {
-            if (marker.getAnimation() !== null) {
-                marker.setAnimation(null);
-            } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-            }
-        });
+        marker.addListener('click', (function (map, marker) {
+            var infowindow = null;
+            infowindow = new gmap.InfoWindow({
+                content: 'nothing'
+            });
+            var isOpened = false;
+            return function () {
+                if (!isOpened) {
+                    isOpened = true;
+                    var info = wiki.searchWikiExtract(marker.title, function (data) {
+                        infowindow.setContent(marker.title + "<br/><hr><br/>Relevant Wikipedia Content:<br/><br/>" + data);
+                    });
+
+                    infowindow.open(map, marker);
+                } else {
+                    isOpened = false;
+                    infowindow.close();
+                }
+            };
+        })(map, marker));
     }
+
+
 
     return {
         zoomToMarker: zoomToMarker,
