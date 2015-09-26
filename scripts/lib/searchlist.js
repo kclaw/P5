@@ -1,4 +1,4 @@
-define("searchlist", ['knockout', 'model', 'map', 'wiki'], function (ko, model, map, wiki) {
+define('searchlist', ['knockout', 'model', 'map'], function (ko, model, map) {
     /**
      * This component provides functions of getting matched markets and action to selected place name.
      * @param   {Object} map google.map.Map

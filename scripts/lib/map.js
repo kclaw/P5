@@ -83,7 +83,7 @@ define('map', ['gmap', 'model', 'knockout', 'wiki'], function (gmap, model, ko, 
      * @param {Object} marker google.maps.Marker
      */
     function addListenerToMarker(marker) {
-        marker.addListener('click', (function (map, marker) {
+        marker.addListener('click', (function (map, marker, wiki) {
             var infowindow = null;
             infowindow = new gmap.InfoWindow({
                 content: 'nothing'
@@ -102,7 +102,7 @@ define('map', ['gmap', 'model', 'knockout', 'wiki'], function (gmap, model, ko, 
                     infowindow.close();
                 }
             };
-        })(map, marker));
+        })(map, marker, wiki));
     }
 
 

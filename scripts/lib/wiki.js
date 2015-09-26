@@ -17,13 +17,14 @@ define('wiki', ['jquery'], function ($) {
             success: function (response) {
                 var articleList = response[1];
                 if (articleList.length > 0) {
-                    display(articleList);
+                    display(articleList.filter(function(item){
+                        return item.search('/' + para + '/') != -1;
+                    }));
                 }
                 clearTimeout(wikiRequestTimeout);
             }
         });
     }
-
 
     /**
     This function would send search request to wikipedia and get back brief content
@@ -38,8 +39,7 @@ define('wiki', ['jquery'], function ($) {
             url: wikiUrl,
             dataType: "jsonp",
             success: function (response) {
-                clearTimeout(wikiRequestTimeout);
-                console.log(response);
+                clearTimeout(wikiRequestTimeout);s
                 for(var prop in response.query.pages)
                     // return only first extract
                    handler(response.query.pages[prop].extract);
@@ -59,7 +59,6 @@ define('wiki', ['jquery'], function ($) {
             $('#wikiresult').append('<li><a href="' + url + '">' + articleStr + '</a></li>');
         }
     }
-
 
     /**
      * Clear diaplay
