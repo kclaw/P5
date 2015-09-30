@@ -1,4 +1,4 @@
-define('program', ['knockout', 'container', 'map', 'a'], function (ko, container) {
+define('program', ['knockout', 'container', 'map', 'searchbar'], function (ko, container) {
     var searchList = container.getInstance('searchlist');
 
     var Program = function () {

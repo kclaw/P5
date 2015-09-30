@@ -1,4 +1,4 @@
-define('a', ['knockout', 'model', 'container'], function (ko, model, container) {
+define('searchbar', ['knockout', 'model', 'container'], function (ko, model, container) {
     /**
      * This component provides functions of getting matched markets and action to selected place name.
      * @returns {Object} searchlist component
