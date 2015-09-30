@@ -1,14 +1,15 @@
-define('searchlist', ['knockout','model', 'container'], function (ko, model, container) {
+define('a', ['knockout', 'model', 'container'], function (ko, model, container) {
     /**
      * This component provides functions of getting matched markets and action to selected place name.
      * @returns {Object} searchlist component
      */
-    var SearchList = function () {
+    var SearchList = function SearchList() {
         var self = this;
+        self.map = container.getInstance('map');
         self.viewModel = function (params) {};
         self.viewModel.query = ko.observable('');
         self.viewModel.query.subscribe(function (newValue) {
-            container.map.filterMarkers(newValue);
+            self.map.filterMarkers(newValue);
         });
         self.viewModel.markers = ko.computed(function () {
             var search = self.viewModel.query();
@@ -18,15 +19,16 @@ define('searchlist', ['knockout','model', 'container'], function (ko, model, con
                 return marker.name.toLowerCase().indexOf(search) >= 0;
             });
         });
-        self.viewModel.selectedItem = ko.observable([model.markers[0]]);
+        self.viewModel.selectedItem = ko.observable([model.markers[1]]);
         self.viewModel.selectItem = ko.computed(function () {
-            container.map.zoomToMarker(marker);
-            container.map.removeAllMarkerBounce();
-            container.map.toggleMarkerBounce(map.getGMarkerFromModel(marker)[0]);
+            var marker = self.viewModel.selectedItem()[0];
+            self.map.zoomToMarker(marker);
+            self.map.removeAllMarkerBounce();
+            self.map.toggleMarkerBounce(self.map.getGMarkerFromModel(marker)[0]);
         });
-        self.template = '<select size="5" data-bind="options:searchlist.viewModel.markers,optionsText: function(item){return item.name;},selectedOptions:program.selectedItem"></select>';
+        self.template = '<select size="5" data-bind="options:program.markers(),optionsText: function(item){return item.name;},selectedOptions:program.selectedItem"></select>';
     };
 
-    container.searchlist = SearchList;
-   // window.searchlist = new Component(map);
+    container.addComponentClass(SearchList);
+
 });

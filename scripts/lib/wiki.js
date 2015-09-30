@@ -39,7 +39,7 @@ define('wiki', ['jquery'], function ($) {
             url: wikiUrl,
             dataType: "jsonp",
             success: function (response) {
-                clearTimeout(wikiRequestTimeout);s
+                clearTimeout(wikiRequestTimeout);
                 for(var prop in response.query.pages)
                     // return only first extract
                    handler(response.query.pages[prop].extract);

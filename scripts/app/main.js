@@ -17,4 +17,4 @@ requirejs.config({
     }
 });
 
-requirejs(["searchlist"]);
+requirejs(["program"]);

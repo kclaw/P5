@@ -5,7 +5,7 @@ Neighbourhood Map
     The aim of program is to show places on map with search ability on given data.places are pinned by markers and can be filtered by right handside searchlist.searchlist conpile a textbox and select element. with inputting of data into textbox,places are filtered on select element and also wikipedia search result is displayed.
 
 
-Display Market
+Display Marker
 =========================================
 1. places are listed on listview of right side.
 
