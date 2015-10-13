@@ -107,11 +107,19 @@ define('map', [
         };
       }(map, marker, wiki));
     }
+    /**
+     * This function remove all animation from google.maps.Marker
+     */
     function removeAllMarkerBounce() {
       gmarkers.forEach(function (gmarker) {
         gmarker.setAnimation(null);
       });
     }
+    /**
+     * This function toggle animation of bounce in marker
+     * @param {Object} google.maps.Marker
+     * @param {boolean} [set true/false value to turn animation of marker on or off]
+     */
     function toggleMarkerBounce() {
       var argsLen = arguments.length;
       if (argsLen == 1) {
@@ -136,6 +144,11 @@ define('map', [
       } else
         return;
     }
+    /**
+     * This function returns google.maps.Marker which is created by reference from marker in model.js
+     * @param   {Object}   marker from model.js
+     * @returns {Object} gmarker from google.maps.Marker
+     */
     function getGMarkerFromModel(marker) {
       if (marker) {
         var filtered = gmarkers.filter(function (item) {

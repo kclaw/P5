@@ -38,12 +38,7 @@ define('pager', [
         return self.entries.slice(index, index + self.entryPerPage);
       });
     };
-    var viewModel = new self.viewModel();
-    self.getInstanceOfViewModel = function () {
-      alert(viewModel);
-      return viewModel;
-    };
-    alert(viewModel.totalPages);
+
     self.template = '<div id="pager">';
     self.template += '<a href="#" class="previous" data-bind="click: previous, visible: hasPrevious">&lt;</a>';
     self.template += '<span class="current" data-bind="text: currentPageNumber"></span>';

@@ -28,7 +28,7 @@
             z-index: 99;
         }
 
-        .searchbar > input {
+        .searchlist > input {
             position: relative;
             width: 100%;
             font-size: 16px;
@@ -42,6 +42,7 @@
             background: grey;
             padding: 0.5em;
             font-size: 1em;
+            color: ghostwhite;
             overflow-x: hidden;
             overflow-y: auto;
             border-bottom-left-radius: 10px;
@@ -52,6 +53,8 @@
             position: relative;
             top: 5px;
             left: 10px;
+            background-color: wheat;
+            width: 25px;
         }
         .wikirelevant ul {
             margin: 20 20 20 20;
@@ -64,13 +67,11 @@
 <body>
     <div id="map"></div>
     <div class="searchbar">
-        <input type="search" data-bind="value:program.query,valueUpdate:'keyup'" autocomplete="on" />
         <div class="searchlist" data-bind="component: 'searchlist'">
         </div>
         <div class="pager" data-bind="component: 'pager'"></div>
         <div class="wikirelevant"></div>
     </div>
-
 </body>
 
 </html>
