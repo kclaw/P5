@@ -33,7 +33,7 @@ define('map', ['gmap', 'model', 'knockout', 'wiki', 'container'], function (gmap
             ko.utils.arrayFilter(gmarkers, function (gmarker) {
                 console.log(gmarker.title);
                 console.log(gmarker.title.toLowerCase().indexOf(search) >= 0);
-                if (gmarker.title.toLowerCase().indexOf(search) >= 0)
+                if (gmarker.title.toLowerCase().indexOf(search.toLowerCase()) >= 0)
                     putMarkerOnMap(gmarker, map);
                 else
                     putMarkerOnMap(gmarker, null);
@@ -69,8 +69,8 @@ define('map', ['gmap', 'model', 'knockout', 'wiki', 'container'], function (gmap
         function zoomToMarker(marker) {
             console.log('Zoom to marker');
             var filtered = getGMarkerFromModel(marker);
-            console.log('affected:' + filtered.length);
-            if (filtered.length > 0) {
+            //console.log('affected:' + filtered.length);
+            if (filtered) {
                 map.setZoom(15);
                 map.panTo(filtered[0].position);
             }
@@ -122,7 +122,11 @@ define('map', ['gmap', 'model', 'knockout', 'wiki', 'container'], function (gmap
             var argsLen = arguments.length;
             if (argsLen == 1) {
                 var marker = arguments[0];
-                if (marker.getAnimation() == null || typeof marker.getAnimation() == 'undefined') {
+                if(!marker){
+                    console.error('marker is nothing');
+                    return;
+                }
+                if (marker.getAnimation() == null) {
                     marker.setAnimation(gmap.Animation.BOUNCE);
                 } else {
                     marker.setAnimation(null);
@@ -140,11 +144,14 @@ define('map', ['gmap', 'model', 'knockout', 'wiki', 'container'], function (gmap
         }
 
         function getGMarkerFromModel(marker) {
-            var filtered = gmarkers.filter(function (item) {
-                console.log(item.title);
-                return item.title == marker.name;
-            });
-            return filtered;
+            if(marker){
+                var filtered = gmarkers.filter(function (item) {
+                    console.log(item.title);
+                    return item.title == marker.name;
+                });
+                return filtered;
+            }
+            return null;
         }
 
         return {

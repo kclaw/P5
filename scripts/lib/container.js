@@ -18,6 +18,8 @@ define('container', [], function () {
                             return instances[o];
                     }
                 var newcomp = new componentClasses[index];
+                if(newcomp.viewModel)
+                    newcomp.viewModel = new newcomp.viewModel();
                 instances.push(newcomp);
                 return newcomp;
             }

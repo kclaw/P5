@@ -10,6 +10,7 @@
         }
         body {
             position: relative;
+            font-size: 16px;
         }
         #map {
             width: 100vw;
@@ -19,14 +20,12 @@
             position: absolute;
             top: 10vh;
             left: 85vw;
-            height: 25vh;
             width: 25vw;
             min-width: 240px;
             -ms-transform: translate(-90%, -10%);
             -webkit-transform: translate(-90%, -10%);
             transform: translate(-90%, -10%);
             z-index: 99;
-            box-shadow: 10px 10px 5px #999999;
         }
 
         .searchbar > input {
@@ -39,17 +38,20 @@
         .searchlist select {
             position: relative;
             width: 100%;
-            height: calc(100% - 2em);
-            height: -o-calc(100% - 2em);
-            height: -webkit-calc(100% - 2em);
-            height: -moz-calc(100% - 2em);
+            height: 5em;
             background: grey;
-            padding: 5px;
-            font-size: 16px;
+            padding: 0.5em;
+            font-size: 1em;
             overflow-x: hidden;
             overflow-y: auto;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
+            box-shadow: 10px 10px 5px #999999;
+        }
+        .pager {
+            position: relative;
+            top: 5px;
+            left: 10px;
         }
         .wikirelevant ul {
             margin: 20 20 20 20;
@@ -65,8 +67,10 @@
         <input type="search" data-bind="value:program.query,valueUpdate:'keyup'" autocomplete="on" />
         <div class="searchlist" data-bind="component: 'searchlist'">
         </div>
+        <div class="pager" data-bind="component: 'pager'"></div>
         <div class="wikirelevant"></div>
     </div>
+
 </body>
 
 </html>
