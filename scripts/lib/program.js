@@ -1,10 +1,13 @@
 define('program', [
   'knockout',
-  'container',
+  'container','jquery',
   'map',
   'searchbar',
   'pager'
-], function (ko, container) {
+], function (ko, container,$) {
+  var map = container.getInstance('map');
+  map.addOverlay();
+  $('.searchbar').append('<div></div>');
   var searchList = container.getInstance('searchlist');
   var pager = container.getInstance('pager');
   ko.components.register('pager', {
@@ -15,5 +18,7 @@ define('program', [
     viewModel: { instance: searchList.viewModel },
     template: searchList.template
   });
-  ko.applyBindings();
+
+  ko.applyBindings(null,$('.searchlist')[0]);
+  $('#map').trigger('SearchBarReady');
 });

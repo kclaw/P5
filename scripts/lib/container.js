@@ -1,4 +1,4 @@
-define('container', [], function () {
+define('container', [], function Container() {
   var Container = function () {
     var componentClasses = [];
     var instances = [];

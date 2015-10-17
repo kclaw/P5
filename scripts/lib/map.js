@@ -3,11 +3,14 @@ define('map', [
   'model',
   'knockout',
   'wiki',
-  'container'
-], function (gmap, model, ko, wiki, container) {
-  var Map = function Map() {
+  'container',
+  'jquery',
+  'knockout'
+], function (gmap, model, ko, wiki, container, $, ko) {
+  var map = function Map() {
     var map;
     var gmarkers = [];
+    var infowindows = [];
     var defaultZoomLevel = 12;
     /**
          * This function is called when map is going to use.
@@ -25,6 +28,7 @@ define('map', [
         createMarker(marker);
       });
     }
+
     initMap();
     /**
          * This function filter markers shown on map
@@ -65,10 +69,13 @@ define('map', [
     function putMarkerOnMap(gmarker, map) {
       gmarker.setMap(map);
     }
+    /**
+     * This function pan and zoom to marker
+     * @param {Object} marker google.maps.marker
+     */
     function zoomToMarker(marker) {
       console.log('Zoom to marker');
       var filtered = getGMarkerFromModel(marker);
-      //console.log('affected:' + filtered.length);
       if (filtered) {
         map.setZoom(15);
         map.panTo(filtered[0].position);
@@ -81,7 +88,8 @@ define('map', [
     function addListenerToMarker(marker) {
       marker.addListener('click', function (map, marker, wiki) {
         var infowindow = null;
-        infowindow = new gmap.InfoWindow({ content: 'Loading...' });
+        infowindow = new gmap.InfoWindow({ content: 'Loading...' , zIndex: 5000});
+        infowindows.push(infowindow);
         infowindow.addListener('closeclick', function () {
           toggleMarkerBounce(marker, false);
         });
@@ -90,8 +98,9 @@ define('map', [
           if (!isOpened) {
             isOpened = true;
             var info = wiki.searchWikiExtract(marker.title, function (data) {
-              infowindow.setContent(marker.title + '<br/><hr><br/>Relevant Wikipedia Content:<br/><br/>' + data);
+              infowindow.setContent('<div class="infowindow">'+marker.title + '<br/><hr><br/>Relevant Wikipedia Content:<br/><br/>' + data + '</div>');
             });
+            closeAllInfoWindows();
             infowindow.open(map, marker);
             toggleMarkerBounce(marker, true);
             var filtered = model.markers.filter(function (item) {
@@ -106,6 +115,15 @@ define('map', [
           }
         };
       }(map, marker, wiki));
+    }
+
+    /**
+     * This function closes all opening infowindows
+     */
+    function closeAllInfoWindows(){
+        infowindows.forEach(function(infowindow){
+            infowindow.close();
+        });
     }
     /**
      * This function remove all animation from google.maps.Marker
@@ -159,13 +177,121 @@ define('map', [
       }
       return null;
     }
+
+
+    function addOverlay() {
+        NEWLayer.prototype = new  gmap.OverlayView();
+        function NEWLayer(){
+            this.div = null;
+            this.oldcenter = null;
+            this.startcenter = null;
+            this.setMap(map);
+        }
+        NEWLayer.prototype.onAdd = function(){
+            var self = this;
+            var div = document.createElement('div');
+            $(div).addClass('searchbar');
+                $(div).attr('id','searchbar');
+            $(div).append('<div class="searchlist" data-bind="component:\'searchlist\'"></div>');
+            $(div).append('<div class="pager" data-bind="component: \'pager\'"></div>');
+            $(div).append('<div class="wikirelevant"></div>');
+
+            self.div = div;
+            var panes = self.getPanes();
+            console.log(panes);
+            self.getPanes().floatPane.appendChild(self.div);
+
+            $(div).append('<div></div>');
+            $('.searchbar').append('<div></div>');
+            $('.searchbar').append('<div></div>');
+            $(document.body).append('<div>oh no</div>');
+
+            ko.applyBindings(null,$('.searchbar')[0]);
+        }
+        NEWLayer.prototype.draw = function(){
+
+        }
+        NEWLayer.prototype.align = function(){
+
+        //alert(window.getComputedStyle($('.searchbar')[0],null).getPropertyValue('height'));
+            alert(this.getProjection());
+            var w = $(window);
+            var offset = $('.searchbar').offset();
+            var t0 = performance.now();
+            //if(offset.top!=250 && offset.left !=250)
+            //$('.searchbar').offset({top:250,left:250});
+            //$('.searchbar').css('transform','translate(150px,150px)');
+            var projection = this.getProjection();
+            console.log(projection);
+            if(null == this.startcenter){
+                this.startcenter = this.getProjection().fromLatLngToDivPixel(map.getCenter());
+            }else {
+                var currentcenter = this.getProjection().fromLatLngToDivPixel(map.getCenter());
+                var changex = (currentcenter.x-this.startcenter.x);
+                var changey = (currentcenter.y - this.startcenter.y);
+                console.log('changex'+ changex +'changey' + changey);
+                $('.searchbar').css('transform', 'translate('+ changex +'px,'+ changey +'px)');
+            }
+            var t1 = performance.now();
+            console.log(t1-t0);
+           /* var projection = this.getProjection();
+            if(projection){
+                var center = projection.fromLatLngToDivPixel(map.getCenter());
+                console.log('centerx'+center.x+' ' +center.y);
+                console.log($('.searchbar').offset().left);
+                if(null==this.oldcenter)
+                    this.oldcenter = center;
+                else {
+                    var changeX = center.x - this.oldcenter.x;
+                    var changeY = center.y - this.oldcenter.y;
+                    var offset = $('.searchbar').offset();
+                    console.log('changex ' + changeX);
+                    console.log('changey ' + changeY);
+                    $('.searchbar').offset({left:offset.left+changeX,top:offset.top+changeY});
+                    this.oldcenter = center;
+                }
+
+                /*console.log(center.x);
+                 if(null==this.oldx)
+                    this.oldx = center.x;
+                 if(null==this.oldy)
+                     this.oldy = center.y;
+                var offset = $('#searchbar').offset();console.log(offset.top + '/'+offset.left);
+                $('#searchbar').css({left:offset.left, top:offset.top});
+                this.oldx = center.x;
+                this.oldy = center.y;
+            }*/
+        }
+        NEWLayer.prototype.onRemove = function(){
+            alert('remove');
+        }
+        var instance = new NEWLayer();
+
+        $('#map').on('SearchBarReady', function(event){
+            map.addListener('center_changed', function(){
+                //instance.align();
+                alert(instance.getProjection());
+            });
+            $(window).resize(function(){
+                instance.align();
+            });
+        });
+
+    }
+
+    function addControl(elem){
+        map.controls[gmap.ControlPosition.LEFT_TOP].push(elem);
+    }
+
     return {
+      constructor: {name:'Map'},
       zoomToMarker: zoomToMarker,
       filterMarkers: filterMarkers,
       toggleMarkerBounce: toggleMarkerBounce,
       removeAllMarkerBounce: removeAllMarkerBounce,
-      getGMarkerFromModel: getGMarkerFromModel
+      getGMarkerFromModel: getGMarkerFromModel,
+      addOverlay:addOverlay
     };
   };
-  container.addComponentClass(Map);
+  container.addComponentClass(map);
 });

@@ -36,7 +36,7 @@ define('searchbar', [
         self.map.toggleMarkerBounce(self.map.getGMarkerFromModel(marker) ? self.map.getGMarkerFromModel(marker)[0] : null);
       });
     };
-      self.template = '<input type="search" data-bind="value:query,valueUpdate:"keyup"" autocomplete="on" />';
+      self.template = '<input type="search" data-bind="value:query,valueUpdate:\'keyup\'" autocomplete="on" />';
     self.template += '<select size="5" data-bind="options:markers(),optionsText: function(item){return item.name;},selectedOptions:selectedItem"></select>';
   };
   container.addComponentClass(SearchList);

@@ -7,10 +7,7 @@
         * {
             margin: 0px;
             padding: 0px;
-        }
-        body {
-            position: relative;
-            font-size: 16px;
+            font-size: 2vmax;
         }
         #map {
             width: 100vw;
@@ -19,22 +16,19 @@
         .searchbar {
             position: absolute;
             top: 10vh;
-            left: 85vw;
+            left: 65vw;
             width: 25vw;
             min-width: 240px;
-            -ms-transform: translate(-90%, -10%);
-            -webkit-transform: translate(-90%, -10%);
-            transform: translate(-90%, -10%);
-            z-index: 99;
         }
 
         .searchlist > input {
             position: relative;
             width: 100%;
-            font-size: 16px;
+            font-size: 1em;
             height: 2em;
             padding-left: 0.5em;
         }
+
         .searchlist select {
             position: relative;
             width: 100%;
@@ -49,6 +43,7 @@
             border-bottom-right-radius: 10px;
             box-shadow: 10px 10px 5px #999999;
         }
+
         .pager {
             position: relative;
             top: 5px;
@@ -56,22 +51,21 @@
             background-color: wheat;
             width: 25px;
         }
+
         .wikirelevant ul {
             margin: 20 20 20 20;
             background: yellow;
             list-style-type: none;
+        }
+
+        .infowindow {
+            font-size: 0.8em;
         }
     </style>
 </head>
 
 <body>
     <div id="map"></div>
-    <div class="searchbar">
-        <div class="searchlist" data-bind="component: 'searchlist'">
-        </div>
-        <div class="pager" data-bind="component: 'pager'"></div>
-        <div class="wikirelevant"></div>
-    </div>
 </body>
 
 </html>
