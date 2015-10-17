@@ -184,7 +184,6 @@ define('map', [
         NEWLayer.prototype = new  gmap.OverlayView();
         function NEWLayer(){
             this.div = null;
-            this.oldcenter = null;
             this.startcenter = null;
             this.setMap(map);
         }
