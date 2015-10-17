@@ -79,6 +79,7 @@ define('map', [
       if (filtered) {
         map.setZoom(15);
         map.panTo(filtered[0].position);
+        gmap.event.trigger(map, 'center_changed');
       }
     }
     /**
@@ -197,16 +198,19 @@ define('map', [
             $(div).append('<div class="wikirelevant"></div>');
 
             self.div = div;
-            var panes = self.getPanes();
-            console.log(panes);
-            self.getPanes().floatPane.appendChild(self.div);
 
-            $(div).append('<div></div>');
-            $('.searchbar').append('<div></div>');
-            $('.searchbar').append('<div></div>');
-            $(document.body).append('<div>oh no</div>');
+            self.getPanes().overlayMouseTarget.appendChild(self.div);
 
             ko.applyBindings(null,$('.searchbar')[0]);
+
+            map.addListener('center_changed', function(){
+                self.align();
+            });
+            $(window).resize(function(){
+                var newwidth = $(window).width() * 0.65;
+                var newheight = $(window).height() * 0.1;
+                $('.searchbar').offset({top:newheight,left:newwidth});
+            });
         }
         NEWLayer.prototype.draw = function(){
 
@@ -214,20 +218,16 @@ define('map', [
         NEWLayer.prototype.align = function(){
 
         //alert(window.getComputedStyle($('.searchbar')[0],null).getPropertyValue('height'));
-            alert(this.getProjection());
-            var w = $(window);
             var offset = $('.searchbar').offset();
             var t0 = performance.now();
             //if(offset.top!=250 && offset.left !=250)
             //$('.searchbar').offset({top:250,left:250});
             //$('.searchbar').css('transform','translate(150px,150px)');
-            var projection = this.getProjection();
-            console.log(projection);
             if(null == this.startcenter){
                 this.startcenter = this.getProjection().fromLatLngToDivPixel(map.getCenter());
             }else {
                 var currentcenter = this.getProjection().fromLatLngToDivPixel(map.getCenter());
-                var changex = (currentcenter.x-this.startcenter.x);
+                var changex = (currentcenter.x - this.startcenter.x);
                 var changey = (currentcenter.y - this.startcenter.y);
                 console.log('changex'+ changex +'changey' + changey);
                 $('.searchbar').css('transform', 'translate('+ changex +'px,'+ changey +'px)');
@@ -266,17 +266,6 @@ define('map', [
             alert('remove');
         }
         var instance = new NEWLayer();
-
-        $('#map').on('SearchBarReady', function(event){
-            map.addListener('center_changed', function(){
-                //instance.align();
-                alert(instance.getProjection());
-            });
-            $(window).resize(function(){
-                instance.align();
-            });
-        });
-
     }
 
     function addControl(elem){
