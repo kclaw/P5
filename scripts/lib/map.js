@@ -107,7 +107,7 @@ define('map', [
             var filtered = model.markers.filter(function (item) {
               return item.name == marker.title;
             });
-            if (filtered.length > 0)
+            if (filtered)
               container.getInstance('searchlist').viewModel.selectedItem(filtered);
           } else {
             isOpened = false;
@@ -169,12 +169,15 @@ define('map', [
      * @returns {Object} gmarker from google.maps.Marker
      */
     function getGMarkerFromModel(marker) {
+        console.log('getGMarkerFrommModel');
+        console.log(marker);
       if (marker) {
+          console.log(marker);
         var filtered = gmarkers.filter(function (item) {
-          console.log(item.title);
           return item.title == marker.name;
         });
-        return filtered;
+          console.log(filtered);
+        return filtered && filtered.length >= 1 ? filtered : null;
       }
       return null;
     }
@@ -189,6 +192,7 @@ define('map', [
         }
         NEWLayer.prototype.onAdd = function(){
             var self = this;
+            self.startcenter = this.getProjection().fromLatLngToDivPixel(map.getCenter());
             var div = document.createElement('div');
             $(div).addClass('searchbar');
                 $(div).attr('id','searchbar');
@@ -198,7 +202,7 @@ define('map', [
 
             self.div = div;
 
-            self.getPanes().overlayMouseTarget.appendChild(self.div);
+            self.getPanes().floatPane.appendChild(self.div);
 
             ko.applyBindings(null,$('.searchbar')[0]);
 
@@ -217,49 +221,19 @@ define('map', [
         NEWLayer.prototype.align = function(){
 
         //alert(window.getComputedStyle($('.searchbar')[0],null).getPropertyValue('height'));
-            var offset = $('.searchbar').offset();
             var t0 = performance.now();
             //if(offset.top!=250 && offset.left !=250)
             //$('.searchbar').offset({top:250,left:250});
             //$('.searchbar').css('transform','translate(150px,150px)');
-            if(null == this.startcenter){
-                this.startcenter = this.getProjection().fromLatLngToDivPixel(map.getCenter());
-            }else {
+
                 var currentcenter = this.getProjection().fromLatLngToDivPixel(map.getCenter());
                 var changex = (currentcenter.x - this.startcenter.x);
                 var changey = (currentcenter.y - this.startcenter.y);
-                console.log('changex'+ changex +'changey' + changey);
+                console.log('changex:'+ changex +'changey: ' + changey);
                 $('.searchbar').css('transform', 'translate('+ changex +'px,'+ changey +'px)');
-            }
-            var t1 = performance.now();
-            console.log(t1-t0);
-           /* var projection = this.getProjection();
-            if(projection){
-                var center = projection.fromLatLngToDivPixel(map.getCenter());
-                console.log('centerx'+center.x+' ' +center.y);
-                console.log($('.searchbar').offset().left);
-                if(null==this.oldcenter)
-                    this.oldcenter = center;
-                else {
-                    var changeX = center.x - this.oldcenter.x;
-                    var changeY = center.y - this.oldcenter.y;
-                    var offset = $('.searchbar').offset();
-                    console.log('changex ' + changeX);
-                    console.log('changey ' + changeY);
-                    $('.searchbar').offset({left:offset.left+changeX,top:offset.top+changeY});
-                    this.oldcenter = center;
-                }
 
-                /*console.log(center.x);
-                 if(null==this.oldx)
-                    this.oldx = center.x;
-                 if(null==this.oldy)
-                     this.oldy = center.y;
-                var offset = $('#searchbar').offset();console.log(offset.top + '/'+offset.left);
-                $('#searchbar').css({left:offset.left, top:offset.top});
-                this.oldx = center.x;
-                this.oldy = center.y;
-            }*/
+            var t1 = performance.now();
+            console.log('align cause '+ (t1-t0));
         }
         NEWLayer.prototype.onRemove = function(){
             alert('remove');

@@ -30,14 +30,15 @@ define('searchbar', [
       });
       this.selectedItem = ko.observable([model.markers[1]]);
       this.selectItem = ko.computed(function () {
-        var marker = self2.selectedItem()[0];
+        var marker = self2.selectedItem();
+          console.log(self2.selectedItem());
         self.map.zoomToMarker(marker);
         self.map.removeAllMarkerBounce();
         self.map.toggleMarkerBounce(self.map.getGMarkerFromModel(marker) ? self.map.getGMarkerFromModel(marker)[0] : null);
       });
     };
       self.template = '<input type="search" data-bind="value:query,valueUpdate:\'keyup\'" autocomplete="on" />';
-    self.template += '<select size="5" data-bind="options:markers(),optionsText: function(item){return item.name;},selectedOptions:selectedItem"></select>';
+    self.template += '<select size="5" data-bind="options:markers(),optionsText: \'name\',optionsValue: \'name\',selectedByName:selectedItem"></select>';
   };
   container.addComponentClass(SearchList);
 });
