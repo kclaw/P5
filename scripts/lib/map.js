@@ -196,15 +196,14 @@ define('map', [
             var div = document.createElement('div');
             $(div).addClass('searchbar');
                 $(div).attr('id','searchbar');
-            $(div).append('<div class="searchlist" data-bind="component:\'searchlist\'"></div>');
+            $(div).append('<div class="searchlist" data-bind="component: \'searchlist\'"></div>');
             $(div).append('<div class="pager" data-bind="component: \'pager\'"></div>');
-            $(div).append('<div class="wikirelevant"></div>');
+            $(div).append('<div class="wikirelevant"><div></div></div>');
 
             self.div = div;
-
-            self.getPanes().floatPane.appendChild(self.div);
-
-            ko.applyBindings(null,$('.searchbar')[0]);
+            var searchlist = container.getInstance('searchlist');
+            ko.applyBindings(searchlist.viewModel,self.div);
+            self.getPanes().overlayMouseTarget.appendChild(self.div);
 
             map.addListener('center_changed', function(){
                 self.align();
@@ -214,6 +213,7 @@ define('map', [
                 var newheight = $(window).height() * 0.1;
                 $('.searchbar').offset({top:newheight,left:newwidth});
             });
+
         }
         NEWLayer.prototype.draw = function(){
 

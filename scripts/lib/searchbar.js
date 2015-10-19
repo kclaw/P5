@@ -1,8 +1,9 @@
 define('searchbar', [
   'knockout',
   'model',
-  'container'
-], function (ko, model, container) {
+  'container',
+  'jquery'
+], function (ko, model, container, $) {
   /**
      * This component provides functions of getting matched markets and action to selected place name.
      * @returns {Object} searchlist component
@@ -36,9 +37,18 @@ define('searchbar', [
         self.map.removeAllMarkerBounce();
         self.map.toggleMarkerBounce(self.map.getGMarkerFromModel(marker) ? self.map.getGMarkerFromModel(marker)[0] : null);
       });
+      this.selectAfterRender = function (option){
+        $(option).click(function(){
+        $(this).parent().val($(this).val());$(this).parent().trigger('change');});
+      }
+      this.searchAfterRender = function (elem){console.log(elem);
+          $(elem).click(function(){
+            $(this).focus();
+          });
+      }
     };
-      self.template = '<input type="search" data-bind="value:query,valueUpdate:\'keyup\'" autocomplete="on" />';
-    self.template += '<select size="5" data-bind="options:markers(),optionsText: \'name\',optionsValue: \'name\',selectedByName:selectedItem"></select>';
+      self.template = '<input type="search" data-bind="value:query,valueUpdate:\'keyup\',afterInputRender:searchAfterRender" autocomplete="on" placeholder="Search Place here" />';
+    self.template += '<select size="5" data-bind="options:markers(),optionsText: \'name\',optionsValue: \'name\',selectedByName:selectedItem,optionsAfterRender:selectAfterRender,optionsCaption:\'--Move to one place--\'"></select>';
   };
   container.addComponentClass(SearchList);
 });

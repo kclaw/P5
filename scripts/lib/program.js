@@ -6,7 +6,6 @@ define('program', [
   'pager'
 ], function (ko, container,$) {
   var map = container.getInstance('map');
-  map.addOverlay();
   $('.searchbar').append('<div></div>');
   var searchList = container.getInstance('searchlist');
   var pager = container.getInstance('pager');
@@ -14,10 +13,11 @@ define('program', [
     viewModel: { instance: pager.viewModel },
     template: pager.template
   });
-  ko.components.register('searchlist', {
+ ko.components.register('searchlist', {
     viewModel: { instance: searchList.viewModel },
     template: searchList.template
   });
+   map.addOverlay();
   ko.bindingHandlers.selectedByName = {
     init: function (element, valueAccessor, allBindings){
         $(element).change(function(){
@@ -25,17 +25,18 @@ define('program', [
             var newSelectedValue = $(element).find("option:selected").val();
             var va = valueAccessor();
             if (!!newSelectedValue) {
-               // alert(newSelectedValue);
-                //alert(ko.utils.arrayFirst(emps, function(item){return item.name == newSelectedValue}));
                 va(ko.utils.arrayFirst(emps, function(item){return item.name == newSelectedValue}));
             }else va(null);
         });
     },
     update: function (element, valueAccessor){
         var selectedItem = ko.unwrap(valueAccessor());console.log('update'+selectedItem.name);
-        $(element).val(selectedItem?selectedItem.name :'');
+        $(element).val(selectedItem ? selectedItem.name : '');
     }
   }
-  ko.applyBindings(null,$('.searchlist')[0]);
-  $('#map').trigger('SearchBarReady');
+  ko.bindingHandlers.afterInputRender = {
+    update: function(el, va, ab){
+        va()(el);
+    }
+  }
 });
