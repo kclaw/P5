@@ -30,7 +30,7 @@ define('program', [
         });
     },
     update: function (element, valueAccessor){
-        var selectedItem = ko.unwrap(valueAccessor());console.log('update'+selectedItem.name);
+        var selectedItem = ko.unwrap(valueAccessor());
         $(element).val(selectedItem ? selectedItem.name : '');
     }
   }
