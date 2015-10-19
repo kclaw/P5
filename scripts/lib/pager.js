@@ -22,9 +22,8 @@ define('pager', [
         return self.currentPageNumber() !== 0;
       });
       self.next = function () {
-        if (self.hasNext()) {
+        if (self.hasNext())
           self.currentPageNumber(self.currentPageNumber() + 1);
-        }
       };
       self.previous = function () {
         if (self.hasPrevious())
