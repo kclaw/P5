@@ -1,7 +1,20 @@
 define('container', [], function Container() {
+  /**
+   *This component contains other components. Its main purpose
+   is to instantiate contained classes once required. It prevents
+   from undefined object in AMD
+   * @returns {Object} container component
+   */
   var Container = function () {
+    // contains class
     var componentClasses = [];
+    //contains instances of classes
     var instances = [];
+
+    /**This function return an instance of class
+     * @param   {String}   className className of a class in array of componentClasses
+     * @returns {Object} instance of class
+     */
     function getInstance(className) {
       var index = null;
       for (var i = 0, len = componentClasses.length; i < len; i++) {
@@ -17,6 +30,7 @@ define('container', [], function Container() {
               return instances[o];
           }
         var newcomp = new componentClasses[index]();
+        // if there is function declaration of viewModel in class, initiate it also.
         if (newcomp.viewModel)
           newcomp.viewModel = new newcomp.viewModel();
         instances.push(newcomp);
@@ -24,14 +38,16 @@ define('container', [], function Container() {
       }
       return null;
     }
+    /**
+     * This function add class to array of componetClasses
+     * @param {Function} classOfComponent function declaration of a class
+     */
     function addComponentClass(classOfComponent) {
       componentClasses.push(classOfComponent);
     }
     return {
       getInstance: getInstance,
-      addComponentClass: addComponentClass,
-      componentClasses: componentClasses,
-      instances: instances
+      addComponentClass: addComponentClass
     };
   };
   return new Container();

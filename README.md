@@ -1,23 +1,43 @@
 Neighbourhood Map
 =========================================
-    This program manipulates google map,wikipedia,knockout,require framework/library.
+    This project works around map and show places we are interested in(interest).
 
-    The aim of program is to show places on map with search ability on given data.places are pinned by markers and can be filtered by right handside searchlist.searchlist conpile a textbox and select element. with inputting of data into textbox,places are filtered on select element and also wikipedia search result is displayed.
-
-
-Display Marker
+Map Functionality
 =========================================
-1. places are listed on listview of right side.
+1. display markers that pinned on interest.
+2. show information of interest in infowindow (use wikipedia data api)
 
-
-
-Search Place
+Location Detail Functionality
 =========================================
-1. filter place(s) by typing in place name on searchlist.
-2. click on either one of places would pin to markers on map.
+1. provides information of interest (by wikipedia data api)
 
-
-
-Additional Wikipedia information
+Search Functionality
 =========================================
-1. search wikipedia for place you have typed in.
+1. filter interest according to input
+2. dispaly search result of interest
+3. pan to interest on map
+4. display in listview
+
+How to run?
+=========================================
+open index.html
+
+
+Technical Involvement
+=========================================
+    This program makes use of google map api,wikipedia data api,knockout.js,require.js framework/library.
+    
+    This project has many javascript files which defined in AMD using require.js,
+    js file is loaded on demand.
+    In this structure, all js files are put under scripts folder.
+    Configuration file of require.js is put under scripts/app folder.
+    And any other js modeule which defined in AMD specification or traditional js script files are put under scripts/lib folder.
+    program.js is main entry point of program which is configured to be called in main.js.
+    Before any code executed in program.js, knockout.js,jquery framework and container.js and some components which adds to container are loaded.
+    Since using knockout.js, components are going to registered and some bindingHandlers are assigned in program.js
+    At last, function addOverlay is called to add saerchlist component as a floating layer into google map.
+    
+    By the way, debug.js is loaded in global envirnoment by configuration file(main.js). so function debug can be called inside each module. debug.js is used to log down important information at the moment in execution flow. It would display debug information only when is set to be enable. It is a good tool to know what is going on of a program.
+    
+    Type in debug.enable('*') into console of a browser and refresh the browser.
+    For more details, browse to https://github.com/visionmedia/debug

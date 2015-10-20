@@ -1,6 +1,7 @@
 define('program', [
   'knockout',
-  'container','jquery',
+  'container',
+  'jquery',
   'map',
   'searchbar',
   'pager'
