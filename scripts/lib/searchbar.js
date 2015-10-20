@@ -9,6 +9,7 @@ define('searchbar', [
      * @returns {Object} searchlist component
      */
   var SearchList = function SearchList() {
+    var logger = debug('searchlist');
     var self = this;
     self.map = container.getInstance('map');
     self.pager = container.getInstance('pager');
@@ -19,6 +20,7 @@ define('searchbar', [
         self.map.filterMarkers(newValue);
       });
       this.markers = ko.computed(function () {
+        logger('function markers is called');
         var search = self2.query();
         var entries = ko.utils.arrayFilter(model.markers, function (marker) {
           console.log(marker.name);
@@ -31,17 +33,20 @@ define('searchbar', [
       });
       this.selectedItem = ko.observable([model.markers[1]]);
       this.selectItem = ko.computed(function () {
+        logger('function selectItem is called');
         var marker = self2.selectedItem();
-          console.log(self2.selectedItem());
         self.map.zoomToMarker(marker);
         self.map.removeAllMarkerBounce();
         self.map.toggleMarkerBounce(self.map.getGMarkerFromModel(marker) ? self.map.getGMarkerFromModel(marker)[0] : null);
       });
       this.selectAfterRender = function (option){
+        logger('function selectAfterRender is called');
         $(option).click(function(){
-        $(this).parent().val($(this).val());$(this).parent().trigger('change');});
+        $(this).parent().val($(this).val());
+        $(this).parent().trigger('change');});
       }
-      this.searchAfterRender = function (elem){console.log(elem);
+      this.searchAfterRender = function (elem){
+          logger('function searchAfterRender is called');
           $(elem).click(function(){
             $(this).focus();
           });

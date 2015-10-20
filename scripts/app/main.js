@@ -18,3 +18,6 @@ requirejs.config({
 });
 
 requirejs(["program"]);
+require(['debug'], function(debug){
+    window.debug = window.debug||debug;
+});
