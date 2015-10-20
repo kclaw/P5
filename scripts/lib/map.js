@@ -14,8 +14,8 @@ define('map', [
     var infowindows = [];
     var defaultZoomLevel = 12;
     /**
-         * This function is called when map is going to use.
-         */
+    * This function is called when map is going to use.
+     */
     function initMap() {
       logger('function initMap is called');
       map = new gmap.Map(document.getElementById('map'), {
@@ -35,9 +35,9 @@ define('map', [
       initMap();
     });
     /**
-         * This function filter markers shown on map
-         * @param {String} search search data
-         */
+    * This function filter markers shown on map
+    * @param {String} search search data
+    */
     function filterMarkers(search) {
       logger('function filterMarkers is called');
       ko.utils.arrayFilter(gmarkers, function (gmarker) {
@@ -51,9 +51,9 @@ define('map', [
       logger('function filterMarkers is ended');
     }
     /**
-         * This function create marker on map
-         * @param {Object} marker from model
-         */
+    * This function create marker on map
+    * @param {Object} marker from model
+    */
     function createMarker(marker) {
       logger('function createMarker is called');
       var gmarker = new gmap.Marker({
