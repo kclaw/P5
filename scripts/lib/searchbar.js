@@ -39,20 +39,21 @@ define('searchbar', [
         self.map.removeAllMarkerBounce();
         self.map.toggleMarkerBounce(self.map.getGMarkerFromModel(marker) ? self.map.getGMarkerFromModel(marker)[0] : null);
       });
-      this.selectAfterRender = function (option){
+      this.selectAfterRender = function (option) {
         logger('function selectAfterRender is called');
-        $(option).click(function(){
-        $(this).parent().val($(this).val());
-        $(this).parent().trigger('change');});
-      }
-      this.searchAfterRender = function (elem){
-          logger('function searchAfterRender is called');
-          $(elem).click(function(){
-            $(this).focus();
-          });
-      }
+        $(option).click(function () {
+          $(this).parent().val($(this).val());
+          $(this).parent().trigger('change');
+        });
+      };
+      this.searchAfterRender = function (elem) {
+        logger('function searchAfterRender is called');
+        $(elem).click(function () {
+          $(this).focus();
+        });
+      };
     };
-      self.template = '<input type="search" data-bind="value:query,valueUpdate:\'keyup\',afterInputRender:searchAfterRender" autocomplete="on" placeholder="Search Place here" />';
+    self.template = '<input type="search" data-bind="value:query,valueUpdate:\'keyup\',afterInputRender:searchAfterRender" autocomplete="on" placeholder="Search Place here" />';
     self.template += '<select size="5" data-bind="options:markers(),optionsText: \'name\',optionsValue: \'name\',selectedByName:selectedItem,optionsAfterRender:selectAfterRender,optionsCaption:\'--Move to one place--\'"></select>';
   };
   container.addComponentClass(SearchList);

@@ -10,7 +10,6 @@ define('container', [], function Container() {
     var componentClasses = [];
     //contains instances of classes
     var instances = [];
-
     /**This function return an instance of class
      * @param   {String}   className className of a class in array of componentClasses
      * @returns {Object} instance of class
