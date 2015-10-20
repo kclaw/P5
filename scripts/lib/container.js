@@ -2,7 +2,8 @@ define('container', [], function Container() {
   /**
    *This component contains other components. Its main purpose
    is to instantiate contained classes once required. It prevents
-   from undefined object in AMD
+   from undefined object in AMD.It is helpful to bridge between viewModel of
+   components
    * @returns {Object} container component
    */
   var Container = function () {
