@@ -7,9 +7,6 @@ define('wiki', ['jquery'], function ($) {
   function searchWiki(para) {
     clearDisplay();
     var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + para + '&format=json&list=geosearch';
-    var wikiRequestTimeout = setTimeout(function () {
-      alert('wiki not found');
-    }, 8000);
     $.ajax({
       url: wikiUrl,
       dataType: 'jsonp',
@@ -21,6 +18,9 @@ define('wiki', ['jquery'], function ($) {
           }));
         }
         clearTimeout(wikiRequestTimeout);
+      },
+      error: function(){
+        alert('wiki not found');
       }
     });
   }

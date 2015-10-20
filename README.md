@@ -34,7 +34,7 @@ Technical Involvement
     And any other js modeule which defined in AMD specification or traditional js script files are put under scripts/lib folder.
     program.js is main entry point of program which is configured to be called in main.js.
     Before any code executed in program.js, knockout.js,jquery framework and container.js and some components which adds to container are loaded.
-    Since using knockout.js, components are going to registered and some bindingHandlers are assigned in program.js
+    Since using knockout.js, components are going to registered and bindingHandlers are assigned in program.js
     At last, function addOverlay is called to add saerchlist component as a floating layer into google map.
     
     By the way, debug.js is loaded in global envirnoment by configuration file(main.js). so function debug can be called inside each module. debug.js is used to log down important information at the moment in execution flow. It would display debug information only when is set to be enable. It is a good tool to know what is going on of a program.
