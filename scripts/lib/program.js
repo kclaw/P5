@@ -2,12 +2,11 @@ define('program', [
   'knockout',
   'container',
   'jquery',
-  'sidebar',
   'infowindow',
   'map',
   'searchbar',
   'pager'
-], function (ko, container, $, sidebar) {
+], function (ko, container, $) {
   var logger = debug('program');
   var map = container.getInstance('map');
   var searchList = container.getInstance('searchlist');
