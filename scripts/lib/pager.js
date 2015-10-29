@@ -11,6 +11,25 @@ define('pager', [
       self.entries = ko.observableArray([]);
       self.currentPageNumber = ko.observable(0);
       self.entryPerPage = 3;
+      self.range = function(entry){
+          if(!entry)return;
+          console.log('entry is');
+          console.log(entry);
+        logger('function range is called');
+        var index = null;
+        for(var i=0;i<self.entries().length;i++){
+            if(entry === self.entries()[i]){
+                index = i;
+                break;
+            }
+        }
+        console.log('index' + index);
+        if(null!==index){console.log('page~~'+Math.floor(index / self.entryPerPage));
+            self.currentPageNumber(Math.floor(index / self.entryPerPage));
+        }else{
+             self.currentPageNumber(0);
+        }
+      }
       self.totalPages = ko.computed(function () {
         logger('function totalPages is called');
         var noOfPage = Math.floor(self.entries().length / self.entryPerPage);
@@ -28,18 +47,22 @@ define('pager', [
       self.next = function () {
         logger('function next is called');
         if (self.hasNext()) {
+          container.getInstance('searchlist').viewModel.selectedItem(null);
           self.currentPageNumber(self.currentPageNumber() + 1);
         }
       };
       self.previous = function () {
         logger('function previous is called');
-        if (self.hasPrevious())
+        if (self.hasPrevious()){
+                      container.getInstance('searchlist').viewModel.selectedItem(null);
           self.currentPageNumber(self.currentPageNumber() - 1);
-      };
+
+        }
+      }
       self.updateEntries = function (en) {
         logger('function updateEntries is called');
         self.entries(en);
-      };
+      }
       self.showEntries = ko.computed(function () {
         logger('function showEntries is called');
         var index = self.entryPerPage * self.currentPageNumber();

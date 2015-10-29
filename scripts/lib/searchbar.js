@@ -23,8 +23,6 @@ define('searchbar', [
         logger('function markers is called');
         var search = self2.query();
         var entries = ko.utils.arrayFilter(model.markers, function (marker) {
-          console.log(marker.name);
-          console.log(marker.name.toLowerCase().indexOf(search) >= 0);
           return marker.name.toLowerCase().indexOf(search.toLowerCase()) >= 0;
         });
         self.pager.viewModel.updateEntries(entries);
@@ -34,10 +32,10 @@ define('searchbar', [
       this.selectedItem = ko.observable([model.markers[1]]);
       this.selectItem = ko.computed(function () {
         logger('function selectItem is called');
+        logger(self2.selectedItem());
         var marker = self2.selectedItem();
         self.map.zoomToMarker(marker);
-        self.map.removeAllMarkerBounce();
-        self.map.toggleMarkerBounce(self.map.getGMarkerFromModel(marker) ? self.map.getGMarkerFromModel(marker)[0] : null);
+        self.map.clickOnMarker(marker);
       });
       this.selectAfterRender = function (option) {
         logger('function selectAfterRender is called');

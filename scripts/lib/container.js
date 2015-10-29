@@ -7,7 +7,8 @@ define('container', [], function Container() {
    * @returns {Object} container component
    */
   var Container = function () {
-    // contains class
+    var logger = debug('container');
+    // contains classes
     var componentClasses = [];
     //contains instances of classes
     var instances = [];
@@ -17,17 +18,23 @@ define('container', [], function Container() {
      */
     function getInstance(className) {
       var index = null;
+      logger('find out index of componentClasses which matches className');
       for (var i = 0, len = componentClasses.length; i < len; i++) {
         if (componentClasses[i].name.toLowerCase() === className.toLowerCase()) {
           index = i;
           break;
         }
       }
+      logger('try to take it from cached or create it if not present in cache');
+        console.log(instances);
+        console.log(componentClasses);
       if (null != index) {
         if (instances.length > 0)
           for (var o = 0; o < instances.length; o++) {
             if (instances[o].constructor.name.toLowerCase() === className.toLowerCase())
               return instances[o];
+            if(instances[o].name && instances[o].name.toLowerCase()===className.toLowerCase())
+                return instances[o];
           }
         var newcomp = new componentClasses[index]();
         // if there is function declaration of viewModel in class, initiate it also.

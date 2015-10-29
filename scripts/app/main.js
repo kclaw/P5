@@ -13,7 +13,8 @@ requirejs.config({
         "https://maps.googleapis.com/maps/api/js?key=AIzaSyAkGtCBYlY5jVJgSLybrruTvGZs5lejQA0&sensor=true!callback",
     },
     "shim": {
-        "map":["gmap"]
+        "map":["gmap"],
+        "sidebar":["jquery"]
     }
 });
 

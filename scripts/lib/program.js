@@ -2,10 +2,12 @@ define('program', [
   'knockout',
   'container',
   'jquery',
+  'sidebar',
+  'infowindow',
   'map',
   'searchbar',
   'pager'
-], function (ko, container, $) {
+], function (ko, container, $, sidebar) {
   var logger = debug('program');
   var map = container.getInstance('map');
   var searchList = container.getInstance('searchlist');
@@ -20,8 +22,10 @@ define('program', [
     viewModel: { instance: searchList.viewModel },
     template: searchList.template
   });
+  map.initMap();
   logger('function addOverlay of map is about to call');
   map.addOverlay();
+
   logger('bindingHandler of knockout is about to create - selectedByName');
   ko.bindingHandlers.selectedByName = {
     init: function (element, valueAccessor, allBindings) {
@@ -39,7 +43,8 @@ define('program', [
     },
     update: function (element, valueAccessor) {
       var selectedItem = ko.unwrap(valueAccessor());
-      $(element).val(selectedItem ? selectedItem.name : '');
+      pager.viewModel.range(selectedItem);
+      $(element).val(selectedItem ? selectedItem.name : null);
     }
   };
   logger('bindingHandler of knockout is about to create - afterInputRender');

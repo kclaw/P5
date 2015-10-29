@@ -17,7 +17,6 @@ define('wiki', ['jquery'], function ($) {
             return item.search('/' + para + '/') != -1;
           }));
         }
-        clearTimeout(wikiRequestTimeout);
       },
       error: function(){
         alert('wiki not found');
@@ -30,17 +29,16 @@ define('wiki', ['jquery'], function ($) {
      */
   function searchWikiExtract(para, handler) {
     var wikiUrl = 'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=' + para;
-    var wikiRequestTimeout = setTimeout(function () {
-      alert('wiki not found');
-    }, 8000);
     $.ajax({
       url: wikiUrl,
       dataType: 'jsonp',
       success: function (response) {
-        clearTimeout(wikiRequestTimeout);
         for (var prop in response.query.pages)
           // return only first extract
           handler(response.query.pages[prop].extract);
+      },
+      error: function(){
+        alert('wiki not found');
       }
     });
   }
