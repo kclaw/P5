@@ -21,7 +21,10 @@ define('program', [
     viewModel: { instance: searchList.viewModel },
     template: searchList.template
   });
-  map.initMap();
+ $(document).ready(function(){
+     map.initMap();
+ });
+
   logger('function addOverlay of map is about to call');
   map.addOverlay();
 
