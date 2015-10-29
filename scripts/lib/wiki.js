@@ -35,7 +35,7 @@ define('wiki', ['jquery'], function ($) {
       success: function (response) {
         for (var prop in response.query.pages)
           // return only first extract
-          handler(response.query.pages[prop].extract);
+          handler(response.query.pages[prop].extract==null||response.query.pages[prop].extract.length==0?"Not Found on Wikipedia":response.query.pages[prop].extract);
       },
       error: function(){
         alert('wiki not found');

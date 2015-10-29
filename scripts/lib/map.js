@@ -157,10 +157,17 @@ define('map', [
       return null;
       logger('function getGMarkerFromModel is ended');
     }
-
-      function getMap(){
+    /**
+     * This function gets instance of current google.maps.Map
+     * @returns {Object} google.maps.Map
+     */
+    function getMap(){
         return map;
-      }
+    }
+    /**
+     * This function trigger action of click event on google.maps.Marker
+     * @param {Object} marker model.markers
+     */
     function clickOnMarker(marker){
         var gmarker = getGMarkerFromModel(marker);
         console.log(gmarker);
@@ -168,6 +175,9 @@ define('map', [
            container.getInstance('infowindow')(gmarker[0]).toggle();
     }
 
+    /**
+     * This function add an Overlayview to instance of google.maps.Map
+     */
     function addOverlay() {
       logger('function addOverlay is called');
       NEWLayer.prototype = new gmap.OverlayView();
